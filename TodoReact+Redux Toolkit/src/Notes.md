@@ -18,3 +18,6 @@ segrigte action/function in one place when we need we take/triger   >> action di
 
   const [list,dispatch] =useReducer(todoReducer,[])
 
+
+redux toolkit
+npm install @reduxjs/toolkit

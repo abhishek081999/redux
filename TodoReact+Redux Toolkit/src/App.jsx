@@ -4,8 +4,8 @@ import TodoList from './components/TodoList/TodoList';
 import AddTodo from './components/AddTodo/AddTodo';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addTodo,editTodo,deleteTodo,todoFinished } from './actions/todoActions';
-
+// import { addTodo,editTodo,deleteTodo,todoFinished } from './actions/todoActions';
+import {addTodo,editTodo,deleteTodo,todoFinished} from './slices/todoSlice';
 function App() {
   const dispatch = useDispatch();
   const actions = bindActionCreators({addTodo,editTodo,deleteTodo,todoFinished},dispatch)

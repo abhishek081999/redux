@@ -7,19 +7,19 @@ function TodoList({editTodo,deleteTodo,todoFinished }) {
 
   // const dispatch = useDispatch();
 
-  const list = useSelector((state)=> state.todo)  ///callback state pass and get what you want from state
+  const list = useSelector((state)=> state.todo.todoList)  ///callback state pass and get what you want from state
   function onFinished(todo,isFinished){
-   todoFinished(todo,isFinished)
+   todoFinished({todo,isFinished})
   }
 
 
   function onDelete(todo){
-    deleteTodo(todo)
+    deleteTodo({todo})
   }
 
 
   function onEdit(todo, todoText){
-    editTodo(todo, todoText)
+    editTodo({todo, todoText})
 
   }
 
