@@ -1,4 +1,4 @@
- import { createStore,bindActionCreators } from "redux";
+ import { createStore,bindActionCreators, combineReducers } from "redux";
 // const initialState = {value: 0};
 
 // const reducer = (state, actions) => { // this reducer actually doesnt do anything
@@ -11,7 +11,9 @@
 const ADD_TODO = 'add_todo';
 const DEL_TODO ='del_todo';
 const EDIT_TODO ='edit_todo'
-function todoReducer(state, action){
+const ADD_USER = 'add_user'
+function todoReducer(state=[], action){
+
     if(action.type == 'add_todo'){
     const todoText = action.payload.todoText;
 
@@ -49,14 +51,28 @@ function todoReducer(state, action){
 
 }
 
+
+function userReducer(state=[], action){
+
+if (action.type == 'add_user'){
+    const userName = action.payload.userName;
+   return [
+    ...state,
+      {name:userName,  id:(state.length ==0)? 1: state[state.length - 1].id + 1}
+   ]
+}
+return state;
+}
+
 //action object ==> action methods  (action creator)
- const addTodo =(todoText) =>({type:'add-todo', payload:{todoText}})
- const deleteTodo =(id)=>({type:'del-todo', payload:{todoId:id}})
+ const addTodo =(todoText) =>({type:'add_todo', payload:{todoText}})
+ const deleteTodo =(id)=>({type:'del_todo', payload:{todoId:id}})
+ const addUser = (name)=> ({type:'add_user', payload:{userName:name}})
 
 
-
-const response = createStore(todoReducer, []);
-const {dispatch, subscribe, getState,replaceReducer} = createStore(todoReducer, []);
+ const reducer =combineReducers({todo: todoReducer, user:userReducer})
+// const response = createStore(todoReducer, []);
+const {dispatch, subscribe, getState,replaceReducer} = createStore(reducer);
 
 
 // console.log(response);
@@ -70,15 +86,16 @@ subscribe(()=> console.log(getState()))
 //dispatch({type:'add-todo', payload:{todoText:'todo 1'}})
 
 
-const actions = bindActionCreators({addTodo,deleteTodo},dispatch);
+const actions = bindActionCreators({addTodo,deleteTodo,addUser},dispatch);
 
-addTodo('todo 1')
+actions.addTodo('todo 1')
 
-
+actions.addUser('Abhishek')
+actions.addTodo('todo 2')
 // dispatch(addTodo('todo 1'))
 // console.log(getState());
 
-actions.dispatch({type:'add-todo', payload:{todoText:'todo 2'}})
+// actions.dispatch({type:'add-todo', payload:{todoText:'todo 2'}})
 // console.log(getState());
 
 
